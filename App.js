@@ -1,20 +1,52 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// Muaaz Shoaib
+// FA20-BCS-074
+// Design a chess board
+
+import { StyleSheet, View } from "react-native";
+
+const BOARD_SIZE = 8;
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  const renderSquare = (row, col) => {
+    const isDark = (row + col) % 2 === 1;
+    const squareColor = isDark ? "green" : "white";
+
+    return <View style={[styles.square, { backgroundColor: squareColor }]} />;
+  };
+
+  const renderRow = (row) => {
+    const squares = [];
+
+    for (let col = 0; col < BOARD_SIZE; col++) {
+      squares.push(renderSquare(row, col));
+    }
+
+    return <View style={styles.row}>{squares}</View>;
+  };
+
+  const rows = [];
+
+  for (let row = 0; row < BOARD_SIZE; row++) {
+    rows.push(renderRow(row));
+  }
+
+  return <View style={styles.board}>{rows}</View>;
 }
 
 const styles = StyleSheet.create({
-  container: {
+  board: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  square: {
+    width: 42,
+    height: 42,
   },
 });
